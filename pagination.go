@@ -15,7 +15,7 @@ func ProcessPaginationInput(l string, p string) (int, int, error) {
 		return DEFAULT_ITEMS, 0, err
 	}
 	// Check if no limit is provided
-	if intL == 0 {
+	if intL == 0 || intL < MIN_ITEMS {
 		intL = DEFAULT_ITEMS
 	}
 	if intL > MAX_ITEMS {
@@ -28,7 +28,7 @@ func ProcessPaginationInput(l string, p string) (int, int, error) {
 func GenerateMetadata(path string, total int, l int, p int) Links {
 
 	prevPage := p
-	if l != 0 || total <= (p*l+l) {
+	if total <= (p*l + l) {
 		prevPage = 0
 	} else {
 		prevPage = p - 1
