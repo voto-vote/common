@@ -30,7 +30,7 @@ func ProcessPaginationInput(l string, p string) (int, int, error) {
 	}
 	intP, err = strconv.Atoi(p)
 	if err != nil {
-		intP = DEFAULT_ITEMS
+		intP = 0
 	}
 	// Check if no limit is provided
 	if intL == 0 || intL < MIN_ITEMS {
