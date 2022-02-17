@@ -8,11 +8,11 @@ func ProcessPaginationInput(l string, p string) (int, int, error) {
 	// Convert to integer to process further
 	intL, err := strconv.Atoi(l)
 	if err != nil {
-		return DEFAULT_ITEMS, 0, err
+		intL = DEFAULT_ITEMS
 	}
 	intP, err := strconv.Atoi(p)
 	if err != nil {
-		return DEFAULT_ITEMS, 0, err
+		intP = DEFAULT_ITEMS
 	}
 	// Check if no limit is provided
 	if intL == 0 || intL < MIN_ITEMS {
