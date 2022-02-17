@@ -20,7 +20,7 @@ func ProcessPaginationInput(l string, p string) (int, int, error) {
 		intL = DEFAULT_ITEMS
 	}
 	if len(p) == 0 {
-		intP = DEFAULT_ITEMS
+		intP = 0
 	}
 
 	// Convert to integer to process further
