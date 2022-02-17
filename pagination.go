@@ -2,15 +2,33 @@ package common
 
 import "strconv"
 
+// Defines maximal amount of returned items within an array
+const MAX_ITEMS = 50
+
+// Defines the default amount of returned items within an array
+const DEFAULT_ITEMS = 20
+
+// Defines the default amount of returned items within an array
+const MIN_ITEMS = 10
+
 // ProcessPaginationInput parses the user input for limit and page query parameters
 func ProcessPaginationInput(l string, p string) (int, int, error) {
+
+	intL := 0
+	intP := 0
+	if len(l) == 0 {
+		intL = DEFAULT_ITEMS
+	}
+	if len(p) == 0 {
+		intP = DEFAULT_ITEMS
+	}
 
 	// Convert to integer to process further
 	intL, err := strconv.Atoi(l)
 	if err != nil {
 		intL = DEFAULT_ITEMS
 	}
-	intP, err := strconv.Atoi(p)
+	intP, err = strconv.Atoi(p)
 	if err != nil {
 		intP = DEFAULT_ITEMS
 	}
