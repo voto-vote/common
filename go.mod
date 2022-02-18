@@ -4,6 +4,8 @@ go 1.17
 
 require firebase.google.com/go v3.13.0+incompatible
 
+require github.com/aws/aws-lambda-go v1.28.0 // indirect
+
 require (
 	cloud.google.com/go v0.100.2 // indirect
 	cloud.google.com/go/compute v1.2.0 // indirect
