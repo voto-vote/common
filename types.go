@@ -2,6 +2,7 @@ package common
 
 import (
 	"context"
+	"time"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/voto-vote/common/db"
@@ -25,3 +26,10 @@ type HandlerParams struct {
 	Ctx        context.Context
 	Request    events.APIGatewayProxyRequest
 }
+
+type ErrorResponse struct {
+	Status  int32
+	Message string
+}
+
+type VOTODate time.Time
