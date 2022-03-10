@@ -8,7 +8,7 @@ import (
 	"github.com/voto-vote/common"
 )
 
-func HandleError(status int32, errorMsg string) (events.APIGatewayProxyResponse, error) {
+func HandleError(status int32, errorMsg string) events.APIGatewayProxyResponse {
 	errResponse := common.ErrorResponse{
 		Status:  status,
 		Message: errorMsg,
@@ -17,12 +17,12 @@ func HandleError(status int32, errorMsg string) (events.APIGatewayProxyResponse,
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusInternalServerError,
 		Body:       string(jsoned),
-	}, nil
+	}
 }
 
-func HandleSuccess(code int, body string) (events.APIGatewayProxyResponse, error) {
+func HandleSuccess(code int, body string) events.APIGatewayProxyResponse {
 	return events.APIGatewayProxyResponse{
 		StatusCode: code,
 		Body:       body,
-	}, nil
+	}
 }
