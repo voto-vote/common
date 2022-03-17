@@ -1,6 +1,9 @@
 package common
 
-import "strconv"
+import (
+	"math"
+	"strconv"
+)
 
 // Defines maximal amount of returned items within an array
 const MAX_ITEMS = 100
@@ -61,5 +64,33 @@ func GenerateMetadata(path string, total int, l int, p int) Links {
 		Self: path + "?page=" + strconv.Itoa(p),
 		Prev: path + "?page=" + strconv.Itoa(prevPage),
 		Next: path + "?page=" + strconv.Itoa(nextPage),
+	}
+}
+
+// GeneratePagination generates the pagination struct calculated by the input
+func GeneratePagination(total int, per_page int, page int, items int) Pagination {
+
+	lastPage := math.Floor(float64(total) / float64(per_page))
+	from := page*per_page - per_page
+
+	if from > total {
+		from = -1
+		page = -1
+	}
+
+	to := from + items
+	if to > total {
+		to = -1
+		page = -1
+	}
+
+	return Pagination{
+		Total:       total,
+		PerPage:     per_page,
+		CurrentPage: page,
+		LastPage:    int(lastPage),
+		From:        from,
+		To:          to,
+		Links:       Links{},
 	}
 }
