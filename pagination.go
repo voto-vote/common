@@ -3,7 +3,7 @@ package common
 import "strconv"
 
 // Defines maximal amount of returned items within an array
-const MAX_ITEMS = 50
+const MAX_ITEMS = 100
 
 // Defines the default amount of returned items within an array
 const DEFAULT_ITEMS = 20

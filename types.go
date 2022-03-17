@@ -10,15 +10,18 @@ import (
 
 type Links struct {
 	Self string `json:"self"`
-	Prev string `json:"prev"`
-	Next string `json:"next"`
+	Prev string `json:"prev_page_url"`
+	Next string `json:"next_page_url"`
 }
 
-type MetaData struct {
-	Count int   `json:"count"`
-	Total int   `json:"total"`
-	Page  int   `json:"page"`
-	Links Links `json:"_links"`
+type Pagination struct {
+	Total       int   `json:"total"`
+	PerPage     int   `json:"per_page"`
+	CurrentPage int   `json:"current_page"`
+	LastPage    int   `json:"last_page"`
+	From        int   `json:"from"`
+	To          int   `json:"to"`
+	Links       Links `json:"_links"`
 }
 
 type HandlerParams struct {
