@@ -71,21 +71,27 @@ func GenerateMetadata(path string, total int, l int, p int) Links {
 func GeneratePagination(total int, per_page int, page int, items int) Pagination {
 
 	lastPage := math.Floor(float64(total) / float64(per_page))
-	from := page*per_page - per_page
+	from := (page+1)*per_page - per_page
 
 	if from < 0 {
-		from = 1
+		from = 0
+	}
+
+	to := from + items - 1
+	if to > total {
+		page = 0
 	}
 
 	if from > total {
 		from = -1
-		page = -1
+		to = -1
+		page = 0
 	}
 
-	to := from + items
-	if to > total {
-		to = -1
-		page = -1
+	if per_page > total {
+		from = 0
+		to = total - 1
+		page = 0
 	}
 
 	return Pagination{
