@@ -48,20 +48,20 @@ func ProcessPaginationInput(l string, p string) (int, int, error) {
 // GenerateMetadata generate a links struct which can be used within MetaData struct to return from API
 func GenerateMetadata(path string, total int, l int, p int) Links {
 
-	prevPage := p
-	if total <= (p*l + l) {
+	lastPage := math.Floor(float64(total) / float64(l))
+	prevPage := p - 1
+	if prevPage <= 0 {
 		prevPage = 0
-	} else {
-		if prevPage > 0 {
-			prevPage = p - 1
-		}
 	}
-	nextPage := p
-	if (p*l + l) >= total {
-		nextPage = p
-	} else {
-		nextPage = p + 1
+	if prevPage > int(lastPage) {
+		prevPage = int(lastPage)
 	}
+
+	nextPage := p + 1
+	if nextPage > int(lastPage) {
+		nextPage = int(lastPage)
+	}
+
 	return Links{
 		Self: path + "?page=" + strconv.Itoa(p),
 		Prev: path + "?page=" + strconv.Itoa(prevPage),
