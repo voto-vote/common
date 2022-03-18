@@ -50,20 +50,25 @@ func GenerateMetadata(path string, total int, l int, p int) Links {
 
 	lastPage := math.Floor(float64(total) / float64(l))
 	prevPage := p - 1
+	selfPage := p
+
 	if prevPage <= 0 {
 		prevPage = 0
+		selfPage = 0
 	}
 	if prevPage > int(lastPage) {
-		prevPage = int(lastPage)
+		prevPage = int(lastPage) - 1
+		selfPage = int(lastPage)
 	}
 
 	nextPage := p + 1
 	if nextPage > int(lastPage) {
 		nextPage = int(lastPage)
+		selfPage = int(lastPage)
 	}
 
 	return Links{
-		Self: path + "?page=" + strconv.Itoa(p),
+		Self: path + "?page=" + strconv.Itoa(selfPage),
 		Prev: path + "?page=" + strconv.Itoa(prevPage),
 		Next: path + "?page=" + strconv.Itoa(nextPage),
 	}

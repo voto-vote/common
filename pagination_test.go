@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestGetApplicationArray tests the Application endpoint of the API by checking the result struct schema
+// TestPagination checks if pagination numbers are always correct
 func TestPagination(t *testing.T) {
 
 	// Test pagination with parameters in different scenarios
@@ -67,14 +67,29 @@ func TestPagination(t *testing.T) {
 
 }
 
-/*
-type Pagination struct {
-	Total       int   `json:"total"`
-	PerPage     int   `json:"per_page"`
-	CurrentPage int   `json:"current_page"`
-	LastPage    int   `json:"last_page"`
-	From        int   `json:"from"`
-	To          int   `json:"to"`
-	Links       Links `json:"_links"`
+func TestMetadataLinks(t *testing.T) {
+
+	// Test pagination with parameters in different scenarios
+	// Normal scenario
+	t.Log("Normal scenario")
+	l := GenerateMetadata("/test", 78, 20, 0)
+
+	assert.Contains(t, l.Self, "0", "Self link is not correct")
+	assert.Contains(t, l.Next, "1", "Next link is not correct")
+	assert.Contains(t, l.Prev, "0", "Prev link is not correct")
+
+	t.Log("Last page scenario")
+	l = GenerateMetadata("/test", 78, 20, 3)
+
+	assert.Contains(t, l.Self, "3", "Self link is not correct")
+	assert.Contains(t, l.Next, "3", "Next link is not correct")
+	assert.Contains(t, l.Prev, "2", "Prev link is not correct")
+
+	t.Log("Invalid page scenario")
+	l = GenerateMetadata("/test", 78, 20, 10)
+
+	assert.Contains(t, l.Self, "3", "Self link is not correct")
+	assert.Contains(t, l.Next, "3", "Next link is not correct")
+	assert.Contains(t, l.Prev, "2", "Prev link is not correct")
+
 }
-*/
