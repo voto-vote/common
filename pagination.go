@@ -52,7 +52,9 @@ func GenerateMetadata(path string, total int, l int, p int) Links {
 	if total <= (p*l + l) {
 		prevPage = 0
 	} else {
-		prevPage = p - 1
+		if prevPage > 0 {
+			prevPage = p - 1
+		}
 	}
 	nextPage := p
 	if (p*l + l) >= total {
