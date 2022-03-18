@@ -73,6 +73,10 @@ func GeneratePagination(total int, per_page int, page int, items int) Pagination
 	lastPage := math.Floor(float64(total) / float64(per_page))
 	from := page*per_page - per_page
 
+	if from < 0 {
+		from = 1
+	}
+
 	if from > total {
 		from = -1
 		page = -1
