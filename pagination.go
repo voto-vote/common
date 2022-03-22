@@ -18,12 +18,12 @@ const MIN_ITEMS = 10
 func ProcessPaginationInput(l string, p string) (int, int, error) {
 
 	intL := 0
-	intP := 0
+	intP := 1
 	if len(l) == 0 {
 		intL = DEFAULT_ITEMS
 	}
 	if len(p) == 0 {
-		intP = 0
+		intP = 1
 	}
 
 	// Convert to integer to process further
@@ -33,7 +33,7 @@ func ProcessPaginationInput(l string, p string) (int, int, error) {
 	}
 	intP, err = strconv.Atoi(p)
 	if err != nil {
-		intP = 0
+		intP = 1
 	}
 	// Check if no limit is provided
 	if intL == 0 || intL < MIN_ITEMS {
@@ -48,13 +48,13 @@ func ProcessPaginationInput(l string, p string) (int, int, error) {
 // GenerateMetadata generate a links struct which can be used within MetaData struct to return from API
 func GenerateMetadata(path string, total int, l int, p int) Links {
 
-	lastPage := math.Floor(float64(total) / float64(l))
+	lastPage := math.Ceil(float64(total) / float64(l))
 	prevPage := p - 1
 	selfPage := p
 
-	if prevPage <= 0 {
-		prevPage = 0
-		selfPage = 0
+	if prevPage <= 1 {
+		prevPage = 1
+		selfPage = 1
 	}
 	if prevPage > int(lastPage) {
 		prevPage = int(lastPage) - 1
@@ -77,8 +77,8 @@ func GenerateMetadata(path string, total int, l int, p int) Links {
 // GeneratePagination generates the pagination struct calculated by the input
 func GeneratePagination(total int, per_page int, page int, items int) Pagination {
 
-	lastPage := math.Floor(float64(total) / float64(per_page))
-	from := (page+1)*per_page - per_page
+	lastPage := math.Ceil(float64(total) / float64(per_page))
+	from := page*per_page - per_page
 
 	if from < 0 {
 		from = 0
@@ -86,19 +86,19 @@ func GeneratePagination(total int, per_page int, page int, items int) Pagination
 
 	to := from + items - 1
 	if to > total {
-		page = 0
+		page = 1
 	}
 
 	if from > total {
 		from = -1
 		to = -1
-		page = 0
+		page = 1
 	}
 
 	if per_page > total {
 		from = 0
 		to = total - 1
-		page = 0
+		page = 1
 	}
 
 	return Pagination{
