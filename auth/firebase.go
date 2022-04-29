@@ -16,7 +16,7 @@ func (f *Firebase) VerifyIDToken(ctx context.Context, idToken string) (*auth.Tok
 
 func SetupFirebase() Firebase {
 
-	env := os.Getenv("VOTODEV_JSON")
+	env := os.Getenv("VOTO_FB_JSON")
 	new := strings.Replace(env, "`", "", -1)
 
 	opt := option.WithCredentialsJSON([]byte(new))
