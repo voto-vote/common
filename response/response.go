@@ -2,7 +2,6 @@ package response
 
 import (
 	"encoding/json"
-	"net/http"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/voto-vote/common"
@@ -25,13 +24,13 @@ func HandleError(status int32, errorMsg string) (events.APIGatewayProxyResponse,
 	if err != nil {
 		return events.APIGatewayProxyResponse{
 			Headers:    CORS_HEADERS,
-			StatusCode: http.StatusInternalServerError,
+			StatusCode: int(status),
 			Body:       string(jsoned),
 		}, err
 	}
 	return events.APIGatewayProxyResponse{
 		Headers:    CORS_HEADERS,
-		StatusCode: http.StatusInternalServerError,
+		StatusCode: int(status),
 		Body:       string(jsoned),
 	}, nil
 }
